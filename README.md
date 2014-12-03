@@ -24,10 +24,25 @@ or add
 to the require section of your `composer.json` file.
 
 
-Usage
------
 
-Once the extension is installed, simply use it in your code by  :
+
+
+Configuring
+-----------
+
+First you need to configure model as follows:
 
 ```php
-<?= \exertis\yii2savewithaudittrailbehavior\AutoloadExample::widget(); ?>```
+use exertis\savewithaudittrail\SaveWithAuditTrailBehavior;
+
+class Post extends ActiveRecord
+{
+    public function behaviors() {
+        return [
+            [
+                'class' => SaveWithAuditTrailBehavior::className(),
+            ],
+        ];
+    }
+}
+```

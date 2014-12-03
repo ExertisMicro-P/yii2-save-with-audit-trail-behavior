@@ -1,10 +1,10 @@
 <?php
 
-namespace exertis\savewithaudittrail\components;
+namespace exertis\savewithaudittrail;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
-use exertis\savewithaudittrail\models\Audittrail.php;
+use exertis\savewithaudittrail\models\Audittrail;
 
 
 class SaveWithAuditTrailBehavior extends Behavior {
