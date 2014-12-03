@@ -1,3 +1,5 @@
+v1.0.1-alpha
+
 Yii2 Save With Audit Trail Behavior
 ===================================
 Adds a $model->saveWithAuditTrail() method to your Models allowing you to annotate changes to your data.
