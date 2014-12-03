@@ -1,0 +1,21 @@
+{
+    "name": "exertis/yii2-save-with-audit-trail-behavior",
+    "description": "Adds a $model->saveWithAuditTrail() method to your Models allowing you to annotate changes to your data.",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Russell Hutson",
+            "email": "russell.hutson@exertis.co.uk"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "exertis\\yii2savewithaudittrailbehavior\\": ""
+        }
+    }
+}
