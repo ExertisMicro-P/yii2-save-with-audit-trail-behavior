@@ -14,7 +14,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
     {
         parent::init();
         if (!is_subclass_of($this->owner, 'ActiveRecord')) {
-            throw new Exception('Cannot attach '.SaveWithAuditTrailBehavior::className().' to '.$this->owner->className());
+            Yii::error('Cannot attach '.SaveWithAuditTrailBehavior::className().' to '.$this->owner->className());
         }
     }
 
