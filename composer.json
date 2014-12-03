@@ -4,6 +4,12 @@
     "type": "yii2-extension",
     "keywords": ["yii2","extension"],
     "license": "MIT",
+    "support": {
+        "issues": "https://github.com/ExertisMicro-P/yii2-save-with-audit-trail-behavior/issues",
+        "forum": "http://www.yiiframework.com/forum/",
+        "wiki": "http://www.yiiframework.com/wiki/",
+        "source": "https://github.com/ExertisMicro-P/yii2-save-with-audit-trail-behavior"
+    },
     "authors": [
         {
             "name": "Russell Hutson",
