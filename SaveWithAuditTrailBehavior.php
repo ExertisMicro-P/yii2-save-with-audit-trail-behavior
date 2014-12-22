@@ -10,6 +10,7 @@ use exertis\savewithaudittrail\models\Audittrail;
 
 class SaveWithAuditTrailBehavior extends Behavior {
 
+    private $_owner;
 
     public function init()
     {
@@ -30,7 +31,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
      * @param mixed $message Message (string) or Array of Messages to put in the Audit Trail
      */
     public function saveWithAuditTrail($message = '', $runValidation = true, array $attributes = NULL) {
-        //Yii::log(__METHOD__.': message='.print_r($message,true), 'info', 'system.webservice.ProductSupplierWS');
+        $this->_owner = $this->getOwner();
 
         $result = $this->owner->save($runValidation, $attributes);
 
