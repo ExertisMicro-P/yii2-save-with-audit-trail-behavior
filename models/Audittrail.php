@@ -75,15 +75,15 @@ class Audittrail extends \yii\db\ActiveRecord
          * @param type $tableName Table name of the model being affected
          * @param type $recordId Record ID  of the model being affected
          */
-        public static function log($msg, $tableName, $recordId) {
+        public static function log($msg, $tblName, $recordId) {
 
-            if(!$msg || !$tableName || !$recordId)
+            if(!$msg || !$tblName || !$recordId)
                 throw new Exception('Invalid Parameters for '.__METHOD__);
 
             $auditentry = new Audittrail();
 
             $auditentry->message = $msg;
-            $auditentry->table_name = $tableName;
+            $auditentry->table_name = $tblName;
             $auditentry->record_id = $recordId;
             //if (Yii::app() instanceof CConsoleApplication)
             //    $auditentry->username = 'console application';
