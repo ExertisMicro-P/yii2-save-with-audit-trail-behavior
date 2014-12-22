@@ -1,5 +1,5 @@
 <?php
-namespace exertis\savewithaudittrail\components;
+namespace exertis\savewithaudittrail;
 
 use Yii;
 
@@ -40,16 +40,16 @@ class Audittrail extends \yii\db\ActiveRecord
 	{
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
-		return array(
+		return [
 			/*array('timestamp', 'required'),*/
-			array('record_id', 'numerical', 'integerOnly'=>true),
-			array('table_name', 'length', 'max'=>64),
-			array('message', 'length', 'max'=>1024),
-			array('username', 'length', 'max'=>128),
+			['record_id', 'numerical', 'integerOnly'=>true],
+			['table_name', 'length', 'max'=>64],
+			['message', 'length', 'max'=>1024],
+			['username', 'length', 'max'=>128],
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('id, table_name, record_id, message, timestamp, username', 'safe', 'on'=>'search'),
-		);
+			['id, table_name, record_id, message, timestamp, username', 'safe', 'on'=>'search'],
+		];
 	}
 
 
@@ -68,5 +68,29 @@ class Audittrail extends \yii\db\ActiveRecord
 		);
 	}
 
+        /**
+         * Log a message in the Audit Trail table against some Model activity
+         *
+         * @param type $msg Message to Log
+         * @param type $tableName Table name of the model being affected
+         * @param type $recordId Record ID  of the model being affected
+         */
+        public static function log($msg, $tableName, $recordId) {
+
+            if(!$msg || !$tableName || !$recordId)
+                throw new Exception('Invalid Parameters for '.__METHOD__);
+
+            $auditentry = new Audittrail();
+
+            $auditentry->message = $msg;
+            $auditentry->table_name = $tableName;
+            $auditentry->record_id = $recordId;
+            //if (Yii::app() instanceof CConsoleApplication)
+            //    $auditentry->username = 'console application';
+            //else
+            $auditentry->username = !empty(Yii::app()->user->name) ? Yii::app()->user->name : Yii::app()->user->email;
+
+            $auditentry->save();
+        } // log
 
 }

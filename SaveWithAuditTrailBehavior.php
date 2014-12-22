@@ -21,16 +21,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
 
 
     public function _logToAuditTrail($msg) {
-        $auditentry = new Audittrail();
-        $auditentry->message = $msg;
-        $auditentry->table_name = $this->tableName();
-        $auditentry->record_id = floor($this->getPrimaryKey());
-        //if (Yii::app() instanceof CConsoleApplication)
-        //    $auditentry->username = 'console application';
-        //else
-            $auditentry->username = Yii::app()->user->name;
-
-        $auditentry->save();
+        Audittrail::log($msg, $this->owner->tableName(), intval($this->getPrimaryKey()));
     } // _logToAuditTrail
 
     /**
