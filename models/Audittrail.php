@@ -72,7 +72,7 @@ class Audittrail extends \yii\db\ActiveRecord
          * Log a message in the Audit Trail table against some Model activity
          *
          * @param type $msg Message to Log
-         * @param type $tableName Table name of the model being affected
+         * @param type $tblName Table name of the model being affected
          * @param type $recordId Record ID  of the model being affected
          */
         public function log($msg, $tblName, $recordId) {
