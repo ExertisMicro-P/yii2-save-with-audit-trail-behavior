@@ -31,7 +31,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
     public function saveWithAuditTrail($message = '', $runValidation = true, array $attributes = NULL) {
         //Yii::log(__METHOD__.': message='.print_r($message,true), 'info', 'system.webservice.ProductSupplierWS');
 
-        $result = parent::save($runValidation, $attributes);
+        $result = $this->owner->save($runValidation, $attributes);
 
         if (!is_array($message))
             $messages = array($message);
