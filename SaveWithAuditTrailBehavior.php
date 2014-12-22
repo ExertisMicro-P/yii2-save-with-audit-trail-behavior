@@ -21,7 +21,8 @@ class SaveWithAuditTrailBehavior extends Behavior {
 
 
     public function _logToAuditTrail($msg) {
-        Audittrail::log($msg, $this->owner->tableName(), intval($this->getPrimaryKey()));
+        $at = new Audittrail();
+        $at->log($msg, $this->owner->tableName(), intval($this->owner->getPrimaryKey()));
     } // _logToAuditTrail
 
     /**
