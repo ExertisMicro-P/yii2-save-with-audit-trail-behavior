@@ -87,7 +87,7 @@ class Audittrail extends \yii\db\ActiveRecord
             //if (Yii::app() instanceof CConsoleApplication)
             //    $auditentry->username = 'console application';
             //else
-            $this->username = !empty(Yii::app()->user->name) ? Yii::app()->user->name : Yii::app()->user->email;
+            $this->username = !empty(Yii::$app->user->name) ? Yii::$app->user->name : Yii::$app->user->email;
 
             $this->save();
         } // log
