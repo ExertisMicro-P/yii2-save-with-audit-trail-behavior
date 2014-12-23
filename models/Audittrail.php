@@ -1,5 +1,5 @@
 <?php
-namespace exertis\savewithaudittrail;
+namespace exertis\savewithaudittrail\models;
 
 use Yii;
 
@@ -28,7 +28,7 @@ class Audittrail extends \yii\db\ActiveRecord
 	/**
 	 * @return string the associated database table name
 	 */
-	public function tableName()
+	public static function tableName()
 	{
 		return 'audittrail';
 	}
@@ -42,10 +42,10 @@ class Audittrail extends \yii\db\ActiveRecord
 		// will receive user inputs.
 		return [
 			/*array('timestamp', 'required'),*/
-			['record_id', 'numerical', 'integerOnly'=>true],
-			['table_name', 'length', 'max'=>64],
-			['message', 'length', 'max'=>1024],
-			['username', 'length', 'max'=>128],
+			['record_id', 'integer'],
+			['table_name', 'string', 'length' => ['max'=>64]],
+			['message', 'string', 'length' => ['max'=>1024]],
+			['username', 'string', 'length' => ['max'=>128]],
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
 			['id, table_name, record_id, message, timestamp, username', 'safe', 'on'=>'search'],
@@ -84,12 +84,18 @@ class Audittrail extends \yii\db\ActiveRecord
             $this->message = $msg;
             $this->table_name = $tblName;
             $this->record_id = $recordId;
+            $userDetails = \common\models\gauth\GAUser::findOne(['id'=>Yii::$app->user->id]);
             //if (Yii::app() instanceof CConsoleApplication)
             //    $auditentry->username = 'console application';
             //else
-            $this->username = !empty(Yii::$app->user->name) ? Yii::$app->user->name : Yii::$app->user->email;
+            if (!empty($userDetails))
+                $this->username = $userDetails->email;
+            else {
+                $this->username = 'unknown';
+            }
 
-            $this->save();
+            if (!$this->save())
+                throw new Exception('Audittrail filed to save! : '.\yii\helpers\VarDumper::dump($this->getErrors(), 99,TRUE));
         } // log
 
 }
