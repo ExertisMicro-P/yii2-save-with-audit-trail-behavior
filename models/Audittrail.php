@@ -3,6 +3,8 @@ namespace exertis\savewithaudittrail\models;
 
 use Yii;
 
+class AuditTrailException extends \Exception {} ;
+
 /**
  * This is the model class for table "audittrail".
  *
@@ -75,16 +77,15 @@ class Audittrail extends \yii\db\ActiveRecord
          * @param type $tblName Table name of the model being affected
          * @param type $recordId Record ID  of the model being affected
          */
-        public function log($msg, $tblName, $recordId) {
+        public function log($msg, $tblName, $recordId, $userDetails=null) {
 
             if(!$msg || !$tblName || !$recordId)
-                throw new Exception('Invalid Parameters for '.__METHOD__);
+                throw new AuditTrailException('Invalid Parameters for '.__METHOD__);
 
 
             $this->message = $msg;
             $this->table_name = $tblName;
             $this->record_id = $recordId;
-            $userDetails = \common\models\gauth\GAUser::findOne(['id'=>Yii::$app->user->id]);
             //if (Yii::app() instanceof CConsoleApplication)
             //    $auditentry->username = 'console application';
             //else
@@ -95,7 +96,7 @@ class Audittrail extends \yii\db\ActiveRecord
             }
 
             if (!$this->save())
-                throw new Exception('Audittrail filed to save! : '.\yii\helpers\VarDumper::dump($this->getErrors(), 99,TRUE));
+                throw new AuditTrailException('Audittrail filed to save! : '.\yii\helpers\VarDumper::dump($this->getErrors(), 99,TRUE));
         } // log
 
 }

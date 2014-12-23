@@ -11,6 +11,7 @@ use exertis\savewithaudittrail\models\Audittrail;
 class SaveWithAuditTrailBehavior extends Behavior {
 
     private $_owner;
+    public $userClass = '\common\models\User';
 
     public function init()
     {
@@ -20,8 +21,16 @@ class SaveWithAuditTrailBehavior extends Behavior {
 
 
     public function _logToAuditTrail($msg) {
+
+        try {
+          $userObj = new $this->userClass();
+          $user = $userObj->findOne(['id'=>Yii::$app->user->id]);
+        } catch (Exception $ex) {
+          $user = null;
+        }
+
         $at = new Audittrail;
-        $at->log($msg, $this->_owner->tableName(), intval($this->_owner->getPrimaryKey()));
+        $at->log($msg, $this->_owner->tableName(), intval($this->_owner->getPrimaryKey()), $user );
     } // _logToAuditTrail
 
     /**
