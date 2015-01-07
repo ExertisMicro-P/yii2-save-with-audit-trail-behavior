@@ -23,7 +23,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
     public function _logToAuditTrail($msg) {
 
         // check if this is a console app, which has no user
-        if (!empty(Yii::$app->user->id)) {
+        if (get_class(Yii::$app) !== 'yii\console\Application') {
 
             try {
               $userObj = new $this->userClass();
