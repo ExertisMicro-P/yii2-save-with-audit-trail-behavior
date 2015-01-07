@@ -22,11 +22,17 @@ class SaveWithAuditTrailBehavior extends Behavior {
 
     public function _logToAuditTrail($msg) {
 
-        try {
-          $userObj = new $this->userClass();
-          $user = $userObj->findOne(['id'=>Yii::$app->user->id]);
-        } catch (Exception $ex) {
-          $user = null;
+        // check if this is a console app, which has no user
+        if (!empty(Yii::$app->user->id)) {
+
+            try {
+              $userObj = new $this->userClass();
+              $user = $userObj->findOne(['id'=>Yii::$app->user->id]);
+            } catch (Exception $ex) {
+              $user = null;
+            }
+        } else {
+            $user = null; // console app without a user
         }
 
         $at = new Audittrail;
