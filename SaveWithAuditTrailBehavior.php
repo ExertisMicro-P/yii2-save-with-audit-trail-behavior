@@ -55,6 +55,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
 
         $result = $this->_owner->save($runValidation, $attributes);
 
+        if ($result) {
         if (!is_array($message))
             $messages = array($message);
         else
@@ -62,6 +63,7 @@ class SaveWithAuditTrailBehavior extends Behavior {
 
         foreach ($messages as $msg) {
             $this->_logToAuditTrail($msg);
+            }
         }
 
         return $result;
