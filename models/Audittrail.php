@@ -103,26 +103,39 @@ class Audittrail extends \yii\db\ActiveRecord
         /**
          * Retrieve all AuditTrail entries for a list of usernames.
          * Useful for showing the activity of all users
+         * 
+         * We limit the results to only activity relevant to an end user
+         * 
          * @param array $usernames
          * @return \yii\data\ActiveDataProvider
          */
-        public static function getActivityForUsernames(array $usernames) 
+        public static function getActivityForUsernames(array $usernames, array $tablesToIgnore, $limit=100) 
         {
             if (!count($usernames)) {
                 return null;
             }
             
-            $activity = self::find()->
-                    where(['IN', 'username', $usernames])
-                            ->orderBy('timestamp DESC');
-        
+            //$fromDate = date('Y-m-d 00:00:00', strtotime('-30 days'));
+            //$now = date('Y-m-d H:i:s');
+            
+            $query = self::find();
+            
             $dataProvider = new \yii\data\ActiveDataProvider([
-                'query' => $activity,
+                'query' => $query,
                 'pagination' => [
                     'pageSize' => 7,
                 ]
             ]);
             
+            $query->where(['IN', 'username', $usernames]);
+            
+            if (count($tablesToIgnore)) {
+                $query->andWhere(['NOT IN', 'table_name', $tablesToIgnore]);
+            }
+            
+            $query->limit($limit)
+                    ->orderBy('timestamp DESC');
+
             return $dataProvider;
         }
 }
