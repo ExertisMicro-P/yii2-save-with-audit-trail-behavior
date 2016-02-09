@@ -1,4 +1,4 @@
-v1.0.4
+v1.0.5
 
 Yii2 Save With Audit Trail Behavior
 ===================================
