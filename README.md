@@ -28,7 +28,7 @@ Database Setup
 You need to run some migrations to setup the Audit Trail table.
 
 ```
-php yii migrate --migrationPath=@vendor/exertis/yii2-save-with-audit-trail-behavior
+php yii migrate --migrationPath=@vendor/exertis/yii2-save-with-audit-trail-behavior/migrations
 ```
 
 
