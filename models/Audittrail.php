@@ -99,4 +99,30 @@ class Audittrail extends \yii\db\ActiveRecord
                 throw new AuditTrailException('Audittrail filed to save! : '.\yii\helpers\VarDumper::dump($this->getErrors(), 99,TRUE));
         } // log
 
+     
+        /**
+         * Retrieve all AuditTrail entries for a list of usernames.
+         * Useful for showing the activity of all users
+         * @param array $usernames
+         * @return \yii\data\ActiveDataProvider
+         */
+        public function getActivityForUsernames(array $usernames) 
+        {
+            if (!count($usernames)) {
+                return null;
+            }
+            
+            $activity = \exertis\savewithaudittrail\models\Audittrail::find()->
+                    where(['IN', 'username', $usernames])
+                            ->orderBy('timestamp DESC');
+        
+            $dataProvider = new \yii\data\ActiveDataProvider([
+                'query' => $activity,
+                'pagination' => [
+                    'pageSize' => 7,
+                ]
+            ]);
+            
+            return $dataProvider;
+        }
 }
