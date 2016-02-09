@@ -106,13 +106,13 @@ class Audittrail extends \yii\db\ActiveRecord
          * @param array $usernames
          * @return \yii\data\ActiveDataProvider
          */
-        public function getActivityForUsernames(array $usernames) 
+        public static function getActivityForUsernames(array $usernames) 
         {
             if (!count($usernames)) {
                 return null;
             }
             
-            $activity = \exertis\savewithaudittrail\models\Audittrail::find()->
+            $activity = self::find()->
                     where(['IN', 'username', $usernames])
                             ->orderBy('timestamp DESC');
         
